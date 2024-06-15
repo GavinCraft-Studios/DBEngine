@@ -1,11 +1,16 @@
 package engine;
 
+import engine.utility.InterfaceImplementationsFinder;
+
+import java.util.List;
+
 public class GameEngine implements Runnable{
     private Thread gameThread;
+    private List<Runtime> runtimes;
     private boolean running;
     private int fps = 60;
 
-    private Display display;
+    private final Display display;
 
     public GameEngine() {
         running = false;
@@ -17,6 +22,12 @@ public class GameEngine implements Runnable{
         running = true;
         gameThread = new Thread(this);
         gameThread.start();
+
+        // find all runtime implementations & trigger start method
+        findAllRuntimes();
+        for(Runtime runtime : runtimes) {
+            runtime.Start();
+        }
     }
 
     public void stop() {
@@ -66,8 +77,20 @@ public class GameEngine implements Runnable{
         }
     }
 
+    private void findAllRuntimes() {
+        for(Class<? extends Runtime> implClass : InterfaceImplementationsFinder.findAllImplementations()) {
+            try {
+                runtimes.add(implClass.getDeclaredConstructor().newInstance());
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private void update() {
-        // Update game state
+        for(Runtime runtime : runtimes) {
+            runtime.Update();
+        }
     }
 
     private void render() {

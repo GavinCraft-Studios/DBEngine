@@ -1,7 +1,16 @@
 package game;
 
-public class Main {
-    public static void main(String[] args) {
+import engine.Runtime;
+
+public class Main implements Runtime {
+
+    @Override
+    public void Start() {
+
+    }
+
+    @Override
+    public void Update() {
 
     }
 }
