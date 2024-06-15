@@ -3,7 +3,7 @@ package game;
 import engine.GameEngine;
 
 /*
-* This is a startup / setup class that triggers before game logic.
+* This is a startup class that triggers before game logic.
 * Use this class for setup, references, etc.
 */
 
