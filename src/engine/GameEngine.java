@@ -1,7 +1,5 @@
 package engine;
 
-import engine.utility.InterfaceImplementationsFinder;
-
 import java.util.List;
 
 public class GameEngine implements Runnable{
@@ -24,9 +22,10 @@ public class GameEngine implements Runnable{
         gameThread.start();
 
         // find all runtime implementations & trigger start method
-        findAllRuntimes();
-        for(Runtime runtime : runtimes) {
-            runtime.Start();
+        if(runtimes != null) {
+            for(Runtime runtime : runtimes) {
+                runtime.Start();
+            }
         }
     }
 
@@ -77,28 +76,15 @@ public class GameEngine implements Runnable{
         }
     }
 
-    private void findAllRuntimes() {
-        for(Class<? extends Runtime> implClass : InterfaceImplementationsFinder.findAllImplementations()) {
-            try {
-                runtimes.add(implClass.getDeclaredConstructor().newInstance());
-            } catch(Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     private void update() {
-        for(Runtime runtime : runtimes) {
-            runtime.Update();
+        if (runtimes != null) {
+            for(Runtime runtime : runtimes) {
+                runtime.Update();
+            }
         }
     }
 
     private void render() {
         display.render();
-    }
-
-    public static void main(String[] args) {
-        GameEngine engine = new GameEngine();
-        engine.start();
     }
 }

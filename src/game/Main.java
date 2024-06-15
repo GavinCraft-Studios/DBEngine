@@ -1,16 +1,15 @@
 package game;
 
-import engine.Runtime;
+import engine.GameEngine;
 
-public class Main implements Runtime {
+/*
+* This is a startup / setup class that triggers before game logic.
+* Use this class for setup, references, etc.
+*/
 
-    @Override
-    public void Start() {
-
-    }
-
-    @Override
-    public void Update() {
-
+public class Main {
+    public static void main(String[] args) {
+        GameEngine engine = new GameEngine();
+        engine.start();
     }
 }
